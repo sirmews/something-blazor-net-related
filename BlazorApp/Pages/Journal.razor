@@ -1,0 +1,42 @@
+@page "/journal"
+@using BlazorApp.Data
+@using System
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="col-span-1">
+        <h2 class="text-lg font-medium text-gray-900 mb-4">New Journal Entry</h2>
+        <JournalEntryForm id="new-journal-entry" JournalEntry="@newEntry" OnSubmit="HandleSubmit" />
+    </div>
+    <div class="col-span-2">
+        <h2 class="text-lg font-medium text-gray-900 mb-4">Journal Entries</h2>
+        <JournalEntryList Entries="@entries" />
+    </div>
+</div>
+
+@code {
+    private List<JournalEntry> entries = new List<JournalEntry>();
+    private JournalEntry newEntry = new JournalEntry() { Date = DateTime.Today };
+    
+    protected override void OnInitialized()
+    {
+        // Load existing journal entries
+        entries.Add(new JournalEntry
+        {
+            Date = DateTime.Now,
+            Mood = "Happy",
+            Entry = "Today was a good day."
+        });
+
+        entries.Add(new JournalEntry
+        {
+            Date = DateTime.Now.AddDays(-1),
+            Mood = "Sad",
+            Entry = "Yesterday was a rough day."
+        });
+    }
+
+    private async Task HandleSubmit(JournalEntry entry)
+    {
+        entries.Add(entry);
+    }
+}

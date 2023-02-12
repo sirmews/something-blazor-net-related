@@ -1,0 +1,23 @@
+@using BlazorApp.Data
+
+<ul class="divide-y divide-gray-200">
+    @foreach (var entry in Entries)
+    {
+        <li class="py-4">
+            <div class="flex space-x-3">
+                <div class="flex-1 space-y-1">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-medium">@entry.Date.ToShortDateString()</h3>
+                        <p class="text-sm text-gray-500">@entry.Mood</p>
+                    </div>
+                    <p class="text-sm text-gray-500">@entry.Entry</p>
+                </div>
+            </div>
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public List<JournalEntry> Entries { get; set; }
+}

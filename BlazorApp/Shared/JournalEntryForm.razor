@@ -1,0 +1,60 @@
+@using BlazorApp.Data
+@using System
+
+<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
+    <label for="@($"JournalEntryForm-{id}-Date")" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Date:</label>
+    <input class="form-control" type="date" id="@($"JournalEntryForm-{id}-Date")" @bind="@JournalEntry.Date" />
+</div>
+
+<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
+    <label 
+      for="@($"JournalEntryForm-{id}-Mood")" 
+      class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+    >
+      Mood:
+    </label>
+    <select class="form-control" id="@($"JournalEntryForm-{id}-Mood")" @bind="@JournalEntry.Mood">
+        @foreach (var mood in moods)
+        {
+            <option value="@mood">@mood</option>
+        }
+    </select>
+</div>
+
+<div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4">
+    <label 
+      for="@($"JournalEntryForm-{id}-Entry")" 
+      class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+    >
+      Entry:
+    </label>
+    <textarea 
+      class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
+      id="@($"JournalEntryForm-{id}-Entry")" 
+      rows="3" 
+      @bind="@JournalEntry.Entry">
+    </textarea>
+</div>
+
+<div class="form-group">
+    <button class="btn btn-primary" @onclick="HandleSubmit">Save</button>
+</div>
+
+@code {
+    [Parameter]
+    public string id { get; set; }
+
+    [Parameter]
+    public JournalEntry JournalEntry { get; set; }
+
+    [Parameter]
+    public EventCallback<JournalEntry> OnSubmit { get; set; }
+
+    private List<string> moods = new List<string> { "Happy", "Sad", "Excited", "Nostalgic", "Content" };
+
+    private async Task HandleSubmit()
+    {
+        await OnSubmit.InvokeAsync(JournalEntry);
+        JournalEntry = new JournalEntry(); // Clear the form after submission
+    }
+}

@@ -1,0 +1,26 @@
+@page "/todos"
+
+<h1>Todo List</h1>
+
+<ul>
+    @foreach (var todo in todos)
+    {
+        <li>@todo</li>
+    }
+</ul>
+
+<form @onsubmit="AddTodo">
+    <input type="text" @bind="newTodo" />
+    <button type="submit">Add Todo</button>
+</form>
+
+@code {
+    private List<string> todos = new List<string>() { "Item 1", "Item 2", "Item 3" };
+    private string newTodo;
+
+    private void AddTodo()
+    {
+        todos.Add(newTodo);
+        newTodo = "";
+    }
+}
