@@ -1,0 +1,17 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
+{
+  "name": "C# (.NET)",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:7.0",
+  "appPort": ["8080:5000", "8081:5001"],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.blazorwasm-companion",
+        "ms-dotnettools.csharp"
+      ]
+    }
+  },
+  "forwardPorts": [],
+  "runArgs": ["--memory=4g"]
+}
